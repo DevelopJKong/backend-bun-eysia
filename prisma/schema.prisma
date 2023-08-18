@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  /// @type int
+  id Int @id @default(autoincrement())
+
+  /// @format email
+  email String @unique @db.VarChar(255)
+
+  /// @minLength 1
+  /// @maxLength 20
+  username String? @db.VarChar(255)
+
+  /// @minLength 1  
+  /// @maxLength 50
+  password String @db.VarChar(255) // 유저 비밀번호
+
+  /// @minLength 1  
+  /// @maxLength 50
+  name String? @db.VarChar(255) // 유저 이름
+
+  /// @minLength 1  
+  /// @maxLength 50
+  address String? @db.VarChar(255) // 유저 주소
+
+  /// @minLength 1
+  avatarUrl String? @db.VarChar(255) // 유저 프로필 사진
+
+  role RoleData @default(USER) // 유저 권한
+
+  refreshToken String @db.VarChar(255) // 유저 refresh token
+
+  /// @format date-time
+  createdAt DateTime @default(now()) // 유저 생성일
+
+  /// @format date-time
+  updatedAt DateTime @updatedAt // 유저 업데이트일
+}
+
+enum RoleData {
+  USER
+  ADMIN
+}
