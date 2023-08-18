@@ -1,4 +1,4 @@
-import { TypedRoute, t } from 'elysia';
+import { TypedRoute } from 'elysia';
 
 interface ILogin {
   body: TypedRoute['body'];
