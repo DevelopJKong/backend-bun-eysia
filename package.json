@@ -13,6 +13,7 @@
     "@elysiajs/swagger": "^0.6.1",
     "@prisma/client": "^5.1.1",
     "bcryptjs": "^2.4.3",
+    "chalk": "^4.1.2",
     "elysia": "latest",
     "jsonwebtoken": "^9.0.1",
     "lodash": "^4.17.21",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
+    "@types/chalk": "^2.2.0",
     "@types/lodash": "^4.14.197",
     "bun-types": "latest",
     "prisma": "^5.1.1"

@@ -1,4 +1,4 @@
-import { Elysia } from 'elysia';
+import { Elysia, t } from 'elysia';
 import { appController } from './controller/app.controller';
 import { join, login } from './controller/user.controller';
 import { joinMiddleware, loginMiddleware } from './middleware/global.middleware';
@@ -17,7 +17,22 @@ const user = new Elysia({ prefix: '/user' })
 
 const app = new Elysia()
   .use(cors())
-  .use(swagger())
+  .use(
+    swagger({
+      documentation: {
+        info: {
+          title: 'Elysia 프로젝트',
+          version: '1.0.0',
+        },
+        servers: [
+          {
+            url: 'http://localhost:3000',
+            description: '로컬 서버',
+          },
+        ],
+      },
+    }),
+  )
   .get('/', appController)
   .use(user) // ! 유저관련 라우터
   .listen(3000);

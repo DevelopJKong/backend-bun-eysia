@@ -4,10 +4,15 @@ import bcryptjs from 'bcryptjs';
 import { ILoginBody } from '../interface/user/login.interface';
 import { IOutput, IParams } from '../interface/global.interface';
 import { IJoinBody } from '../interface/user/join.interface';
+import { log } from '../logger/winston.logger';
+import chalk from 'chalk';
 
 const prisma = new PrismaClient();
 
 const resultError = ({ data, text, statusCode }: { data: any; text: string; statusCode: number }) => {
+  log().error(
+    `[TEXT::: "${chalk.red(text)}"] [STATUS_CODE::: "${chalk.red(statusCode)}"]  [DATA::: "${chalk.yellow(JSON.stringify(data))}"]`,
+  );
   return new Response(
     JSON.stringify({
       success: false,
@@ -26,6 +31,9 @@ const resultError = ({ data, text, statusCode }: { data: any; text: string; stat
 };
 
 const resultSuccess = ({ data, text, statusCode }: { data: any; text: string; statusCode: number }) => {
+  log().info(
+    `[TEXT::: "${chalk.green(text)}"] [STATUS_CODE::: "${chalk.green(statusCode)}"]  [DATA::: "${chalk.yellow(JSON.stringify(data))}"]`,
+  );
   return new Response(
     JSON.stringify({
       success: true,
@@ -44,8 +52,10 @@ const resultSuccess = ({ data, text, statusCode }: { data: any; text: string; st
 };
 
 export const login = async ({ body, set }: IParams): Promise<IOutput> => {
+  log().info('login');
   const { email, password } = body as ILoginBody;
 
+  log().info('findUnique 호출');
   const response = await prisma.user.findUnique({
     where: {
       email,
@@ -61,6 +71,7 @@ export const login = async ({ body, set }: IParams): Promise<IOutput> => {
     });
   }
 
+  log().info('비밀번호 비교');
   const user = response as User;
   const decodedPassword = await bcryptjs.compare(password, user.password);
 
@@ -82,8 +93,10 @@ export const login = async ({ body, set }: IParams): Promise<IOutput> => {
 };
 
 export const join = async ({ body, set }: IParams): Promise<IOutput> => {
+  log().info('join');
   const { email, password, name, username, address, avatarUrl, role } = body as IJoinBody;
 
+  log().info('findUnique 호출');
   const response = await prisma.user.findUnique({
     where: {
       email,
@@ -99,8 +112,10 @@ export const join = async ({ body, set }: IParams): Promise<IOutput> => {
     });
   }
 
+  log().info('비밀번호 암호화');
   const encryptedPassword = await bcryptjs.hash(password, 10);
 
+  log().info('create 호출');
   await prisma.user.create({
     data: {
       email,
