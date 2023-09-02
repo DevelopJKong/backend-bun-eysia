@@ -4,7 +4,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/index.ts",
-    "dev:debug": "bun --inspect src/index.ts",
+    "dev:debug": "bun --inspect --watch src/index.ts",
     "prisma:init": "npx prisma init",
     "migrate": "npx prisma migrate dev",
     "studio": "npx prisma studio"
