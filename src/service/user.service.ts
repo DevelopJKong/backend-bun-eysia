@@ -53,6 +53,7 @@ const resultSuccess = ({ data, text, statusCode }: { data: any; text: string; st
 
 export const loginService = async ({ body, set }: IParams): Promise<IOutput> => {
   log().info('login');
+  console.log(body);
   const { email, password } = body as ILoginBody;
 
   log().info('findUnique 호출');
