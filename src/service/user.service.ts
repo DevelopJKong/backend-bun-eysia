@@ -2,58 +2,15 @@ import { PrismaClient, User } from '@prisma/client';
 import { IOutput, IParams } from '../interface/global.interface';
 import { ILoginBody } from '../interface/user/login.interface';
 import { log } from '../logger/winston.logger';
-import chalk from 'chalk';
 import _ from 'lodash';
 import bcryptjs from 'bcryptjs';
 import { IJoinBody } from '../interface/user/join.interface';
+import { resultError, resultSuccess } from '../common/common.constant';
 
 const prisma = new PrismaClient();
 
-const resultError = ({ data, text, statusCode }: { data: any; text: string; statusCode: number }) => {
-  log().error(
-    `[TEXT::: "${chalk.red(text)}"] [STATUS_CODE::: "${chalk.red(statusCode)}"]  [DATA::: "${chalk.yellow(JSON.stringify(data))}"]`,
-  );
-  return new Response(
-    JSON.stringify({
-      success: false,
-      message: {
-        text,
-        statusCode,
-      },
-      data,
-    }),
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    },
-  );
-};
-
-const resultSuccess = ({ data, text, statusCode }: { data: any; text: string; statusCode: number }) => {
-  log().info(
-    `[TEXT::: "${chalk.green(text)}"] [STATUS_CODE::: "${chalk.green(statusCode)}"]  [DATA::: "${chalk.yellow(JSON.stringify(data))}"]`,
-  );
-  return new Response(
-    JSON.stringify({
-      success: true,
-      message: {
-        text,
-        statusCode,
-      },
-      data,
-    }),
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    },
-  );
-};
-
 export const loginService = async ({ body, set }: IParams): Promise<IOutput> => {
   log().info('login');
-  console.log(body);
   const { email, password } = body as ILoginBody;
 
   log().info('findUnique 호출');
