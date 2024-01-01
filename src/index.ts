@@ -26,7 +26,7 @@ const app = new Elysia()
         },
         servers: [
           {
-            url: 'http://localhost:3000',
+            url: 'http://localhost:8000',
             description: '로컬 서버',
           },
         ],
@@ -35,6 +35,6 @@ const app = new Elysia()
   )
   .get('/', appController)
   .use(user) // ! 유저관련 라우터
-  .listen(3000);
+  .listen(8000);
 
 console.log(`🦊 Elysia is running at http://${app.server?.hostname}:${app.server?.port}`);
