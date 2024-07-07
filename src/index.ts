@@ -13,7 +13,9 @@ const user = new Elysia({ prefix: '/user' })
   .post('/join', join, {
     ...joinMiddleware,
   })
-  .onError(globalError);
+  .onError(({ code, error }) => {
+    globalError({ code, error });
+  });
 
 const app = new Elysia()
   .use(cors())

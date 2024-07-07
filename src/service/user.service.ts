@@ -13,6 +13,8 @@ export const loginService = async ({ body, set }: IParams): Promise<IOutput> => 
   log().info('login');
   const { email, password } = body as ILoginBody;
 
+  console.log(email, password);
+
   log().info('findUnique 호출');
   const response = await prisma.user.findUnique({
     where: {

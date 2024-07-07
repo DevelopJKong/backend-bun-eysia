@@ -5,18 +5,18 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "bun run src/index.ts",
     "dev": "bun run --watch src/index.ts",
-    "dev:debug": "bun --inspect --watch src/index.ts",
+    "dev:debug": "bun --inspect-brk src/index.ts",
     "prisma:init": "npx prisma init",
     "migrate": "npx prisma migrate dev",
     "studio": "npx prisma studio"
   },
   "dependencies": {
-    "@elysiajs/cors": "^0.6.0",
-    "@elysiajs/swagger": "^0.6.1",
-    "@prisma/client": "^5.1.1",
+    "@elysiajs/cors": "^1.0.2",
+    "@elysiajs/swagger": "^1.0.5",
+    "@prisma/client": "^5.16.1",
     "bcryptjs": "^2.4.3",
     "chalk": "^4.1.2",
-    "elysia": "latest",
+    "elysia": "^1.0.27",
     "jsonwebtoken": "^9.0.1",
     "lodash": "^4.17.21",
     "multer": "^1.4.5-lts.1",
@@ -27,8 +27,8 @@
     "@types/bcryptjs": "^2.4.2",
     "@types/chalk": "^2.2.0",
     "@types/lodash": "^4.14.197",
-    "bun-types": "latest",
-    "prisma": "^5.1.1"
+    "bun-types": "^1.1.18",
+    "prisma": "^5.16.1"
   },
   "module": "src/index.js"
 }

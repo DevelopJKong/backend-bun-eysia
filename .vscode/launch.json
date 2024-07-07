@@ -1,0 +1,27 @@
+{
+  // IntelliSense를 사용하여 가능한 특성에 대해 알아보세요.
+  // 기존 특성에 대한 설명을 보려면 가리킵니다.
+  // 자세한 내용을 보려면 https://go.microsoft.com/fwlink/?linkid=830387을(를) 방문하세요.
+
+  //! 참고 링크 => https://intrepidgeeks.com/tutorial/nestjs-debugging-to-vscode
+
+  /**
+   * ? 총 두가지 방법이 있었습니다 첫번째 방법이 현재 사용하고 있는 방식입니다
+   *
+   *   1. npm run start:debug를 통한 debugging 방식
+   *   2. command를 사용한 방식
+   *
+   *   현재는 그래도 조금 더 간단하고 알아보기 쉬운 첫번째 방식으로 구성하였습니다
+   */
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "command": "bun dev:debug",
+      "name": "Run bun dev:debug",
+      "request": "launch",
+      "type": "node-terminal",
+      "skipFiles": ["<node_internals>/**"],
+      "sourceMaps": true
+    }
+  ]
+}

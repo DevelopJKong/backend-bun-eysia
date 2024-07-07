@@ -1,7 +1,7 @@
 import { InternalServerError, NotFoundError, ParseError, ValidationError } from 'elysia';
 
 interface IError {
-  code: 'UNKNOWN' | 'VALIDATION' | 'NOT_FOUND' | 'PARSE' | 'INTERNAL_SERVER_ERROR';
+  code: 'UNKNOWN' | 'VALIDATION' | 'NOT_FOUND' | 'PARSE' | 'INTERNAL_SERVER_ERROR' | 'INVALID_COOKIE_SIGNATURE';
   error: Readonly<Error> | Readonly<ValidationError> | Readonly<NotFoundError> | Readonly<ParseError> | Readonly<InternalServerError>;
 }
 
