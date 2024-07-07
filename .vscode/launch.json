@@ -17,7 +17,7 @@
   "configurations": [
     {
       "command": "bun dev:debug",
-      "name": "Run bun dev:debug",
+      "name": "Run bun debug",
       "request": "launch",
       "type": "node-terminal",
       "skipFiles": ["<node_internals>/**"],
