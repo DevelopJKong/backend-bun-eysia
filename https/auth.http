@@ -1,0 +1,11 @@
+### 로그인
+###
+POST  {{$dotenv SERVER}}/auth/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "tbaram10@naver.com",
+    "password": "Aasd123!@"
+}
+
+

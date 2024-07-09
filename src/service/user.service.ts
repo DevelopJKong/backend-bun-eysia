@@ -1,17 +1,18 @@
-import { PrismaClient, User } from '@prisma/client';
+//
 import { IOutput, IParams } from '../interface/global.interface';
 import { ILoginBody } from '../interface/user/login.interface';
 import { log } from '../logger/winston.logger';
-import _ from 'lodash';
+import omit from 'lodash/omit';
 import bcryptjs from 'bcryptjs';
 import { IJoinBody } from '../interface/user/join.interface';
 import { resultError, resultSuccess } from '../common/common.constant';
+import { PrismaClient, User } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const loginService = async ({ body, set }: IParams): Promise<IOutput> => {
+export const loginService = async ({ body, set }: IParams<ILoginBody>): Promise<IOutput> => {
   log().info('login');
-  const { email, password } = body as ILoginBody;
+  const { email, password } = body;
 
   console.log(email, password);
 
@@ -23,11 +24,11 @@ export const loginService = async ({ body, set }: IParams): Promise<IOutput> => 
   });
 
   if (!response) {
-    set.status = 404;
     return resultError({
       text: 'User not found',
       statusCode: 404,
       data: null,
+      set,
     });
   }
 
@@ -36,25 +37,25 @@ export const loginService = async ({ body, set }: IParams): Promise<IOutput> => 
   const decodedPassword = await bcryptjs.compare(password, user.password);
 
   if (!decodedPassword) {
-    set.status = 401;
     return resultError({
       text: 'Password is not correct',
       statusCode: 401,
       data: null,
+      set,
     });
   }
 
-  set.status = 200;
   return resultSuccess({
     text: 'Login success',
     statusCode: 200,
-    data: _.omit(user, ['password']),
+    data: omit(user, ['password']),
+    set,
   });
 };
 
-export const joinService = async ({ body, set }: IParams): Promise<IOutput> => {
+export const joinService = async ({ body, set }: IParams<IJoinBody>): Promise<IOutput> => {
   log().info('join');
-  const { email, password, name, username, address, avatarUrl, role } = body as IJoinBody;
+  const { email, password, name, username, address, avatarUrl, role } = body;
 
   log().info('findUnique 호출');
   const response = await prisma.user.findUnique({
@@ -64,11 +65,11 @@ export const joinService = async ({ body, set }: IParams): Promise<IOutput> => {
   });
 
   if (response) {
-    set.status = 409;
     return resultError({
       text: 'User already exists',
       statusCode: 409,
       data: null,
+      set,
     });
   }
 
@@ -91,10 +92,10 @@ export const joinService = async ({ body, set }: IParams): Promise<IOutput> => {
     },
   });
 
-  set.status = 200;
   return resultSuccess({
     text: 'Join success',
     statusCode: 200,
     data: null,
+    set,
   });
 };

@@ -6,10 +6,15 @@ import { swagger } from '@elysiajs/swagger';
 import { globalError } from './error/global.error';
 import cors from '@elysiajs/cors';
 
-const user = new Elysia({ prefix: '/user' })
-  .post('/login', login, {
-    ...loginMiddleware,
+const auth = new Elysia({ prefix: '/auth' })
+  .post('login', login, {
+    // ...loginMiddleware,
   })
+  .onError(({ code, error }) => {
+    globalError({ code, error });
+  });
+
+const user = new Elysia({ prefix: '/user' })
   .post('/join', join, {
     ...joinMiddleware,
   })
@@ -28,7 +33,7 @@ const app = new Elysia()
         },
         servers: [
           {
-            url: 'http://localhost:8000',
+            url: 'http://localhost:8081',
             description: '로컬 서버',
           },
         ],
@@ -37,6 +42,7 @@ const app = new Elysia()
   )
   .get('/', appController)
   .use(user) // ! 유저관련 라우터
-  .listen(8000);
+  .use(auth) // ! 인증관련 라우터
+  .listen(8081);
 
 console.log(`🦊 Elysia is running at http://${app.server?.hostname}:${app.server?.port}`);

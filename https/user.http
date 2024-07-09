@@ -1,0 +1,17 @@
+
+### 회원가입
+###
+POST {{$dotenv SERVER}}/user/join HTTP/1.1
+content-type: application/json
+
+{
+    "email": "tbaram10@naver.com",
+    "username": "jeongbin",
+    "password": "Aasd123!@",
+    "phone": "010-1234-5678",
+    "name": "jeongbin",
+    "address": "부산",
+    "avatarUrl": "",
+    "refreshToken": "",
+    "role": "USER"
+}

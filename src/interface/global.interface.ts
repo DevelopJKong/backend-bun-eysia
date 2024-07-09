@@ -1,7 +1,5 @@
-import { TypedRoute } from 'elysia';
-
-export interface IParams {
-  body: TypedRoute['body'];
+export interface IParams<T> {
+  body: T;
   set: {
     headers: Record<string, string>;
     status?: number;
